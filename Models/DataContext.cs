@@ -6,5 +6,7 @@ namespace rest_api_sistema_compra_venta.Models
     {
         public DataContext(DbContextOptions<DataContext> options)
         :base(options){}
+
+        public DbSet<Categoria> Categorias {get; set;}
     }
 }
