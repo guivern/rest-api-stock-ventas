@@ -8,7 +8,8 @@ namespace rest_api_sistema_compra_venta.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Categoria, CategoriaDto>();
+            CreateMap<Categoria, CategoriaDtoVM>();
+            CreateMap<CategoriaDtoVM, Categoria>();
             CreateMap<CategoriaDto, Categoria>();
         }
     }
