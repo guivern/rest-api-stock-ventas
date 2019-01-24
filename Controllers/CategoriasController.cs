@@ -71,6 +71,7 @@ namespace rest_api_sistema_compra_venta.Controllers
             if(categoria == null) return NotFound();
 
             _context.Categorias.Remove(categoria);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
@@ -112,7 +113,7 @@ namespace rest_api_sistema_compra_venta.Controllers
         [MaxLength(Categoria.DESCRIPCION_MAX_LENGTH,
         ErrorMessage="La descripción no debe tener más de 256 caracteres")]
         public string Descripcion {get; set;}
-        public bool Activo {get; set;}
+        public bool Activo {get; set;} = true;
     }
 
     public class CategoriaDtoVM: CategoriaDto // utilizado en los metodos get y  put
