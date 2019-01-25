@@ -23,21 +23,21 @@ namespace rest_api_sistema_compra_venta.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoriaDtoVM>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Categoria>>> GetAll()
         {
             var categorias = await _context.Categorias.ToListAsync(); 
  
-            return Ok(_mapper.Map<IEnumerable<CategoriaDtoVM>>(categorias));
+            return categorias; //Ok(_mapper.Map<IEnumerable<CategoriaDtoVM>>(categorias));
         }
 
         [HttpGet("{id}", Name="GetCategoria")] 
-        public async Task<ActionResult<CategoriaDtoVM>> GetById(long id)
+        public async Task<ActionResult<Categoria>> GetById(long id)
         {
             var categoria = await _context.Categorias.FindAsync(id);
             
             if(categoria == null) return NotFound();
 
-            return _mapper.Map<CategoriaDtoVM>(categoria);
+            return categoria; //_mapper.Map<CategoriaDtoVM>(categoria);
             
         }
 
@@ -52,12 +52,13 @@ namespace rest_api_sistema_compra_venta.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(long id, CategoriaDtoVM categoriaDto)
+        public async Task<IActionResult> Update(long id, CategoriaDto categoriaDto)
         {
-            if(id != categoriaDto.Id) return BadRequest();
+            //if(id != categoriaDto.Id) return BadRequest();
+            if (!await _context.Categorias.AnyAsync(c => c.Id == id)) return NotFound();
             
             Categoria categoria = _mapper.Map<Categoria>(categoriaDto);
-
+            categoria.Id = id;
             _context.Entry(categoria).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -114,12 +115,6 @@ namespace rest_api_sistema_compra_venta.Controllers
         ErrorMessage="La descripción no debe tener más de 256 caracteres")]
         public string Descripcion {get; set;}
         public bool Activo {get; set;} = true;
-    }
-
-    public class CategoriaDtoVM: CategoriaDto // utilizado en los metodos get y  put
-    {
-        [Required]
-        public long Id {get; set;}
     }
 
 }
