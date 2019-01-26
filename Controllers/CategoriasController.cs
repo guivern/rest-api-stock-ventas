@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -55,11 +56,20 @@ namespace rest_api_sistema_compra_venta.Controllers
         public async Task<IActionResult> Update(long id, CategoriaDto categoriaDto)
         {
             //if(id != categoriaDto.Id) return BadRequest();
-            if (!await _context.Categorias.AnyAsync(c => c.Id == id)) return NotFound();
+            //if (!await _context.Categorias.AnyAsync(c => c.Id == id)) return NotFound();
+            var oldCategoria = await _context.Categorias.FindAsync(id);
+            if(oldCategoria == null) return NotFound();
             
-            Categoria categoria = _mapper.Map<Categoria>(categoriaDto);
-            categoria.Id = id;
-            _context.Entry(categoria).State = EntityState.Modified;
+            
+            Categoria newCategoria = _mapper.Map<Categoria>(categoriaDto);
+            newCategoria.Id = id;
+            newCategoria.FechaModificacion = DateTime.Now;
+            // por default la fecha de creacion se setea con la fecha actual
+            // recuperamos la fecha de creacion original desde oldCategoria
+            newCategoria.FechaCreacion = oldCategoria.FechaCreacion;
+            
+            _context.Entry(oldCategoria).State = EntityState.Detached;
+            _context.Entry(newCategoria).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -70,7 +80,7 @@ namespace rest_api_sistema_compra_venta.Controllers
             var categoria = await _context.Categorias.FindAsync(id);
 
             if(categoria == null) return NotFound();
-
+            
             _context.Categorias.Remove(categoria);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -84,6 +94,7 @@ namespace rest_api_sistema_compra_venta.Controllers
             if(categoria == null) return NotFound();
 
             categoria.Activo = true;
+            categoria.FechaModificacion = DateTime.Now;
 
             _context.Entry(categoria).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -98,6 +109,7 @@ namespace rest_api_sistema_compra_venta.Controllers
             if(categoria == null) return NotFound();
 
             categoria.Activo = false;
+            categoria.FechaModificacion = DateTime.Now;
 
             _context.Entry(categoria).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -111,7 +123,7 @@ namespace rest_api_sistema_compra_venta.Controllers
         [MaxLength(Categoria.NOMBRE_MAX_LENGTH, 
         ErrorMessage="El nombre de categoría no debe tener más de 50 caracteres")]
         public string Nombre {get; set;}
-        [MaxLength(Categoria.DESCRIPCION_MAX_LENGTH,
+        [MaxLength(EntityBase.DESCRIPCION_MAX_LENGTH,
         ErrorMessage="La descripción no debe tener más de 256 caracteres")]
         public string Descripcion {get; set;}
         public bool Activo {get; set;} = true;
