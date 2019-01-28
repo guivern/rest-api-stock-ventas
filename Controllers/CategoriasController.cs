@@ -12,18 +12,12 @@ namespace rest_api_sistema_compra_venta.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriasController: ControllerBase
+    public class CategoriasController: CrudControllerBase<Categoria, CategoriaDto>
     {
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
-
         public CategoriasController(DataContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+        : base(context, mapper){}
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<ActionResult<IEnumerable<Categoria>>> GetAll()
         {
             var categorias = await _context.Categorias.ToListAsync(); 
@@ -40,38 +34,6 @@ namespace rest_api_sistema_compra_venta.Controllers
 
             return categoria; //_mapper.Map<CategoriaDtoVM>(categoria);
             
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CategoriaDto categoriaDto)
-        {
-            Categoria categoria = _mapper.Map<Categoria>(categoriaDto);
-            await _context.Categorias.AddAsync(categoria);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtRoute("GetCategoria", new {id = categoria.Id}, categoria);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(long id, CategoriaDto categoriaDto)
-        {
-            //if(id != categoriaDto.Id) return BadRequest();
-            //if (!await _context.Categorias.AnyAsync(c => c.Id == id)) return NotFound();
-            var oldCategoria = await _context.Categorias.FindAsync(id);
-            if(oldCategoria == null) return NotFound();
-            
-            
-            Categoria newCategoria = _mapper.Map<Categoria>(categoriaDto);
-            newCategoria.Id = id;
-            newCategoria.FechaModificacion = DateTime.Now;
-            // por default la fecha de creacion se setea con la fecha actual
-            // recuperamos la fecha de creacion original desde oldCategoria
-            newCategoria.FechaCreacion = oldCategoria.FechaCreacion;
-            
-            _context.Entry(oldCategoria).State = EntityState.Detached;
-            _context.Entry(newCategoria).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -115,9 +77,42 @@ namespace rest_api_sistema_compra_venta.Controllers
             await _context.SaveChangesAsync();
             return NoContent(); 
         }
+        protected override IQueryable<Categoria> IncludeListFields(IQueryable<Categoria> query)
+        {
+            return query.Where(c => c.Activo);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(long id, CategoriaDto categoriaDto)
+        {
+            var categoriaInDb = await _context.Categorias.FindAsync(id);
+            if(categoriaInDb == null) return NotFound();
+            
+            
+            categoriaInDb =  _mapper.Map<CategoriaDto, Categoria>(categoriaDto, categoriaInDb);
+            categoriaInDb.FechaModificacion = DateTime.Now;
+            // por default la fecha de creacion se setea con la fecha actual
+            // recuperamos la fecha de creacion original desde oldCategoria
+            //newCategoria.FechaCreacion = oldCategoria.FechaCreacion;
+            //_context.Entry(oldCategoria).State = EntityState.Detached;
+            _context.Entry(categoriaInDb).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoriaDto categoriaDto)
+        {
+            Categoria categoria = _mapper.Map<Categoria>(categoriaDto);
+            await _context.Categorias.AddAsync(categoria);
+            await _context.SaveChangesAsync();
+
+            
+            return CreatedAtAction("Detail",new {id = categoria.Id},categoria);
+        }*/
     }
 
-    public class CategoriaDto //utilizado en el metodo post
+    public class CategoriaDto: DtoBase
     {
         [Required(ErrorMessage="El nombre de categoría es requerido")]
         [MaxLength(Categoria.NOMBRE_MAX_LENGTH, 
