@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using rest_api_sistema_compra_venta.Annotations;
 using rest_api_sistema_compra_venta.Models;
 
 namespace rest_api_sistema_compra_venta.Controllers
@@ -23,18 +24,17 @@ namespace rest_api_sistema_compra_venta.Controllers
     public class ArticuloDto: DtoBase
     {
         public string Codigo {get; set;}
-        [Required(ErrorMessage="El nombre del artículo es requerido.")]
-        [MaxLength(Articulo.NOMBRE_MAX_LENGTH,
-        ErrorMessage="El nombre del artículo no debe tener más de 50 caracteres.")]
+        [Requerido]
+        [LongMax(Articulo.NOMBRE_MAX_LENGTH)]
         public string Nombre {get; set;}
-        [MaxLength(EntityBase.DESCRIPCION_MAX_LENGTH,
-        ErrorMessage="La descripción no debe tener más de 256 caracteres.")]
+        [LongMax(EntityBase.DESCRIPCION_MAX_LENGTH)]
         public string Descripcion {get; set;}
-        public decimal PrecioVenta {get; set;}
-        [Range(0, int.MaxValue, ErrorMessage="No se admite valores negativos.")]
+        [Requerido]
+        public decimal? PrecioVenta {get; set;}
+        [NoNegativo]
         public int Stock {get; set;}
-        [Required(ErrorMessage="La categoría es requerida.")]
-        public long IdCategoria {get; set;}
+        [Requerido]
+        public long? IdCategoria {get; set;}
         public bool? Activo {get; set;}
     }
 }
