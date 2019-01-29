@@ -27,11 +27,11 @@ namespace rest_api_sistema_compra_venta.Controllers
         }
         
         [HttpGet] 
-        public virtual async Task<IActionResult> List([FromQuery] bool todos)
+        public virtual async Task<IActionResult> List([FromQuery] bool Inactivos)
         {
             var query = (IQueryable<TEntity>)EntityDbSet;
 
-            if (IsSoftDelete && !todos)
+            if (IsSoftDelete && !Inactivos)
             {
                 query = query.Where(e => (e as SoftDeleteEntityBase).Activo);
             }
@@ -40,10 +40,10 @@ namespace rest_api_sistema_compra_venta.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> Detail(long id, [FromQuery] bool todos)
+        public virtual async Task<IActionResult> Detail(long id, [FromQuery] bool Inactivo)
         {
             var query = (IQueryable<TEntity>)EntityDbSet;
-            if (IsSoftDelete && !todos)
+            if (IsSoftDelete && !Inactivo)
             {
                 query = query.Where(e => (e as SoftDeleteEntityBase).Activo);
             }
