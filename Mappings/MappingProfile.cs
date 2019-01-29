@@ -17,6 +17,7 @@ namespace rest_api_sistema_compra_venta.Mappings
                 .ForMember(d => d.FechaCreacion, opt => opt.Ignore());
              */
             CreateMap<CategoriaDto, Categoria>();
+            CreateMap<ArticuloDto, Articulo>();
         }
     }
 }
