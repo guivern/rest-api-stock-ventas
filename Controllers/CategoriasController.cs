@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using rest_api_sistema_compra_venta.Annotations;
 using rest_api_sistema_compra_venta.Models;
 
 namespace rest_api_sistema_compra_venta.Controllers
@@ -114,12 +115,10 @@ namespace rest_api_sistema_compra_venta.Controllers
 
     public class CategoriaDto: DtoBase
     {
-        [Required(ErrorMessage="El nombre de categoría es requerido")]
-        [MaxLength(Categoria.NOMBRE_MAX_LENGTH, 
-        ErrorMessage="El nombre de categoría no debe tener más de 50 caracteres")]
+        [Requerido]
+        [LongMax(Categoria.NOMBRE_MAX_LENGTH)]
         public string Nombre {get; set;}
-        [MaxLength(EntityBase.DESCRIPCION_MAX_LENGTH,
-        ErrorMessage="La descripción no debe tener más de 256 caracteres")]
+        [LongMax(EntityBase.DESCRIPCION_MAX_LENGTH)]
         public string Descripcion {get; set;}
         public bool Activo {get; set;} = true;
     }
