@@ -9,9 +9,11 @@ namespace rest_api_sistema_compra_venta.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Aqui se configuran los datos semilla
+            // Aqui se agregan los roles del sistema
             modelBuilder.Entity<Rol>().HasData(
-                new Rol{Id = 1, Nombre="Administrador", Descripcion="Rol que posee todos los permisos", Activo = true}
+                new Rol{Id = 1, Nombre="Administrador", Descripcion="Rol que posee todos los permisos del sistema", Activo = true},
+                new Rol{Id = 2, Nombre="Almacenero", Descripcion="Rol que posee los permisos del módulo almacén", Activo = true},
+                new Rol{Id = 3, Nombre="Vendedor", Descripcion="Rol que posee los permisos del módulo ventas", Activo = true}
             );
 
             // Aqui se configuran los OnDelete cascade o restrict
