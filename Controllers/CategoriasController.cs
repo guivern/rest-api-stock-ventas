@@ -120,7 +120,7 @@ namespace rest_api_sistema_compra_venta.Controllers
         public string Nombre {get; set;}
         [LongMax(EntityBase.DESCRIPCION_MAX_LENGTH)]
         public string Descripcion {get; set;}
-        public bool Activo {get; set;} = true;
+        public bool? Activo {get; set;} = true;
     }
 
 }

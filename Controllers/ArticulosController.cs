@@ -30,11 +30,13 @@ namespace rest_api_sistema_compra_venta.Controllers
         [LongMax(EntityBase.DESCRIPCION_MAX_LENGTH)]
         public string Descripcion {get; set;}
         [Requerido]
-        public decimal? PrecioVenta {get; set;}
         [NoNegativo]
-        public int Stock {get; set;}
+        public decimal? PrecioVenta {get; set;}
+        [Requerido]
+        [NoNegativo]
+        public int? Stock {get; set;}
         [Requerido]
         public long? IdCategoria {get; set;}
-        public bool? Activo {get; set;}
+        public bool? Activo {get; set;} = true;
     }
 }
