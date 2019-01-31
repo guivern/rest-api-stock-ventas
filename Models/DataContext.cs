@@ -18,5 +18,6 @@ namespace rest_api_sistema_compra_venta.Models
 
         public DbSet<Categoria> Categorias {get; set;}
         public DbSet<Articulo> Articulos {get; set;}
+        public DbSet<Rol> Roles {get; set;}
     }
 }
