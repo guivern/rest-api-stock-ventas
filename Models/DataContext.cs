@@ -21,10 +21,16 @@ namespace rest_api_sistema_compra_venta.Models
             .HasOne(a => a.Categoria)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Usuario>()
+            .HasOne(u => u.Rol)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
         }
 
         public DbSet<Categoria> Categorias {get; set;}
         public DbSet<Articulo> Articulos {get; set;}
         public DbSet<Rol> Roles {get; set;}
+        public DbSet<Usuario> Usuarios {get; set;}
     }
 }
