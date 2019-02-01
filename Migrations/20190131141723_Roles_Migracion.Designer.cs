@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using rest_api_sistema_compra_venta.Models;
@@ -9,9 +10,10 @@ using rest_api_sistema_compra_venta.Models;
 namespace rest_api_sistema_compra_venta.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190131141723_Roles_Migracion")]
+    partial class Roles_Migracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,79 +92,6 @@ namespace rest_api_sistema_compra_venta.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Activo = true,
-                            Descripcion = "Rol que posee todos los permisos del sistema",
-                            FechaCreacion = new DateTime(2019, 2, 1, 11, 15, 41, 186, DateTimeKind.Local).AddTicks(7106),
-                            Nombre = "Administrador"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Activo = true,
-                            Descripcion = "Rol que posee los permisos del módulo almacén",
-                            FechaCreacion = new DateTime(2019, 2, 1, 11, 15, 41, 190, DateTimeKind.Local).AddTicks(9002),
-                            Nombre = "Almacenero"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Activo = true,
-                            Descripcion = "Rol que posee los permisos del módulo ventas",
-                            FechaCreacion = new DateTime(2019, 2, 1, 11, 15, 41, 190, DateTimeKind.Local).AddTicks(9129),
-                            Nombre = "Vendedor"
-                        });
-                });
-
-            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Usuario", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Activo");
-
-                    b.Property<string>("Apellido")
-                        .IsRequired();
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<string>("Direccion");
-
-                    b.Property<string>("Email");
-
-                    b.Property<DateTime>("FechaCreacion");
-
-                    b.Property<DateTime?>("FechaModificacion");
-
-                    b.Property<DateTime?>("FechaNacimiento");
-
-                    b.Property<byte[]>("HashPassword")
-                        .IsRequired();
-
-                    b.Property<long>("IdRol");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired();
-
-                    b.Property<string>("NumeroDocumento");
-
-                    b.Property<string>("Telefono");
-
-                    b.Property<string>("TipoDocumento");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdRol");
-
-                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Articulo", b =>
@@ -170,14 +99,6 @@ namespace rest_api_sistema_compra_venta.Migrations
                     b.HasOne("rest_api_sistema_compra_venta.Models.Categoria", "Categoria")
                         .WithMany()
                         .HasForeignKey("IdCategoria")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Usuario", b =>
-                {
-                    b.HasOne("rest_api_sistema_compra_venta.Models.Rol", "Rol")
-                        .WithMany()
-                        .HasForeignKey("IdRol")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
