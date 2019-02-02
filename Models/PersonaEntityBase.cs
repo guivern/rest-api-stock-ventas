@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace rest_api_sistema_compra_venta.Models
 {
-    public class PersonaEntityBase: SoftDeleteEntityBase
+    public class PersonaEntityBase: EntityBase
     {
         public static readonly string[] DOCUMENTOS = { "CEDULA", "RUC"};
 
