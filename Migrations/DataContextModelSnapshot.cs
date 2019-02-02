@@ -76,8 +76,6 @@ namespace rest_api_sistema_compra_venta.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Activo");
-
                     b.Property<string>("Apellido")
                         .IsRequired();
 
@@ -133,7 +131,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 1L,
                             Activo = true,
                             Descripcion = "Rol que posee todos los permisos del sistema",
-                            FechaCreacion = new DateTime(2019, 2, 1, 16, 0, 32, 61, DateTimeKind.Local).AddTicks(6862),
+                            FechaCreacion = new DateTime(2019, 2, 2, 10, 15, 44, 71, DateTimeKind.Local).AddTicks(9509),
                             Nombre = "Administrador"
                         },
                         new
@@ -141,7 +139,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 2L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo almacén",
-                            FechaCreacion = new DateTime(2019, 2, 1, 16, 0, 32, 64, DateTimeKind.Local).AddTicks(8343),
+                            FechaCreacion = new DateTime(2019, 2, 2, 10, 15, 44, 72, DateTimeKind.Local).AddTicks(7809),
                             Nombre = "Almacenero"
                         },
                         new
@@ -149,7 +147,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 3L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo ventas",
-                            FechaCreacion = new DateTime(2019, 2, 1, 16, 0, 32, 64, DateTimeKind.Local).AddTicks(8403),
+                            FechaCreacion = new DateTime(2019, 2, 2, 10, 15, 44, 72, DateTimeKind.Local).AddTicks(7830),
                             Nombre = "Vendedor"
                         });
                 });
