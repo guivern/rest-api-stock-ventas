@@ -18,6 +18,7 @@ namespace rest_api_sistema_compra_venta.Mappings
              */
             CreateMap<CategoriaDto, Categoria>();
             CreateMap<ArticuloDto, Articulo>();
+            CreateMap<ClienteDto, Cliente>();
         }
     }
 }
