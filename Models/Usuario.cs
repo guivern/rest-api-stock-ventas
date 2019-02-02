@@ -21,6 +21,8 @@ namespace rest_api_sistema_compra_venta.Models
         public Rol Rol {get; set;}
         public long IdRol {get; set;}
 
+        public bool Activo {get; set;} = true;
+
         [NotMapped]
         public string NombreRol => Rol?.Nombre;
     }

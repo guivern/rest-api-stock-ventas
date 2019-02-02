@@ -71,6 +71,40 @@ namespace rest_api_sistema_compra_venta.Migrations
                     b.ToTable("Categorias");
                 });
 
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Cliente", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Apellido")
+                        .IsRequired();
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<string>("Direccion");
+
+                    b.Property<string>("Email");
+
+                    b.Property<DateTime>("FechaCreacion");
+
+                    b.Property<DateTime?>("FechaModificacion");
+
+                    b.Property<DateTime?>("FechaNacimiento");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired();
+
+                    b.Property<string>("NumeroDocumento");
+
+                    b.Property<string>("Telefono");
+
+                    b.Property<string>("TipoDocumento");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clientes");
+                });
+
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Rol", b =>
                 {
                     b.Property<long>("Id")
@@ -97,7 +131,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 1L,
                             Activo = true,
                             Descripcion = "Rol que posee todos los permisos del sistema",
-                            FechaCreacion = new DateTime(2019, 2, 1, 11, 15, 41, 186, DateTimeKind.Local).AddTicks(7106),
+                            FechaCreacion = new DateTime(2019, 2, 2, 10, 15, 44, 71, DateTimeKind.Local).AddTicks(9509),
                             Nombre = "Administrador"
                         },
                         new
@@ -105,7 +139,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 2L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo almacén",
-                            FechaCreacion = new DateTime(2019, 2, 1, 11, 15, 41, 190, DateTimeKind.Local).AddTicks(9002),
+                            FechaCreacion = new DateTime(2019, 2, 2, 10, 15, 44, 72, DateTimeKind.Local).AddTicks(7809),
                             Nombre = "Almacenero"
                         },
                         new
@@ -113,7 +147,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 3L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo ventas",
-                            FechaCreacion = new DateTime(2019, 2, 1, 11, 15, 41, 190, DateTimeKind.Local).AddTicks(9129),
+                            FechaCreacion = new DateTime(2019, 2, 2, 10, 15, 44, 72, DateTimeKind.Local).AddTicks(7830),
                             Nombre = "Vendedor"
                         });
                 });
