@@ -23,7 +23,9 @@ namespace rest_api_sistema_compra_venta.Controllers
         public string Nombre {get; set;}
         [Requerido]
         public string Apellido {get; set;}
+        [Requerido]
         public string TipoDocumento {get; set;}
+        [Requerido]
         public string NumeroDocumento {get; set;}
         public DateTime? FechaNacimiento {get; set;}
         public string Direccion {get; set;}
