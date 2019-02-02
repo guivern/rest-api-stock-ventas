@@ -33,5 +33,6 @@ namespace rest_api_sistema_compra_venta.Models
         public DbSet<Rol> Roles {get; set;}
         public DbSet<Usuario> Usuarios {get; set;}
         public DbSet<Cliente> Clientes {get; set;}
+        public DbSet<Proveedor> Proveedores {get; set;}
     }
 }
