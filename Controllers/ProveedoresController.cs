@@ -1,12 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_api_sistema_compra_venta.Annotations;
 using rest_api_sistema_compra_venta.Models;
 
 namespace rest_api_sistema_compra_venta.Controllers
 {
+    [Authorize(Roles = "Almacenero, Administrador")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProveedoresController: CrudControllerBase<Proveedor,ProveedorDto>

@@ -101,14 +101,6 @@ namespace rest_api_sistema_compra_venta
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithExposedHeaders(
-                    "Authorization",
-                    "Accept-Ranges",
-                    "Content-Encoding",
-                    "Content-Type",
-                    "Content-Length",
-                    "Content-Disposition",
-                    "Content-Range")
                 )
             .UseAuthentication()
             .UseHttpsRedirection()
