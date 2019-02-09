@@ -26,6 +26,27 @@ namespace rest_api_sistema_compra_venta.Models
             .HasOne(u => u.Rol)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ingreso>()
+            .HasOne(i => i.Proveedor)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ingreso>()
+            .HasOne(i => i.Usuario)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<DetalleIngreso>()
+            .HasOne(d => d.Ingreso)
+            .WithMany(i => i.Detalles)
+            .HasForeignKey(d => d.IdIngreso)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<DetalleIngreso>()
+            .HasOne(d => d.Articulo)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
         }
 
         public DbSet<Categoria> Categorias {get; set;}
@@ -34,5 +55,7 @@ namespace rest_api_sistema_compra_venta.Models
         public DbSet<Usuario> Usuarios {get; set;}
         public DbSet<Cliente> Clientes {get; set;}
         public DbSet<Proveedor> Proveedores {get; set;}
+        public DbSet<Ingreso> Ingresos {get; set;}
+        public DbSet<DetalleIngreso> DetallesIngresos {get; set;}
     }
 }
