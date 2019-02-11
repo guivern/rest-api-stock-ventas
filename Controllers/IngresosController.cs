@@ -101,17 +101,19 @@ namespace rest_api_sistema_compra_venta.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> Search([FromQuery] string filtro)
         {
-            var query = _context.Ingresos.AsQueryable();
-
             if (filtro == null)
             {
+                var query = _context.Ingresos.AsQueryable();
                 return Ok(await IncludeListFields(query).ToListAsync());
             }
-                
-            var ingresos = await query
+
+            var ingresos = await _context.Ingresos
             .Include(i => i.Proveedor)
+            .Include(i => i.Usuario)
             .Where(i => i.NroComprobante.Contains(filtro)
-            || i.Proveedor.RazonSocial.Contains(filtro))
+            || i.Proveedor.RazonSocial.ToLower().Contains(filtro.ToLower())
+            || i.Usuario.Username.ToLower().Contains(filtro.ToLower())
+            || i.FechaHora.ToString().Contains(filtro))
             .ToListAsync();
 
             return Ok(ingresos);
