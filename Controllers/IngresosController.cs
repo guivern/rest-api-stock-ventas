@@ -165,7 +165,7 @@ namespace rest_api_sistema_compra_venta.Controllers
         [Requerido]
         public List<DetalleDto> Detalles { get; set; }
     }
-
+    
     public class DetalleDto : DtoBase
     {
         [Requerido]
