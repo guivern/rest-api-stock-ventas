@@ -61,16 +61,16 @@ namespace rest_api_sistema_compra_venta.Controllers
                 DetalleIngreso detalle = new DetalleIngreso
                 {
                     IdIngreso = ingreso.Id,
-                    IdArticulo = detalleDto.IdArticulo,
-                    Cantidad = detalleDto.Cantidad,
-                    Precio = detalleDto.Precio,
+                    IdArticulo = (long) detalleDto.IdArticulo,
+                    Cantidad = (int) detalleDto.Cantidad,
+                    Precio = (decimal) detalleDto.Precio,
                     FechaCreacion = DateTime.Now
                 };
                 _context.DetallesIngresos.Add(detalle);
 
                 //se actualiza el stock
                 var articulo = await _context.Articulos.FindAsync(detalleDto.IdArticulo);
-                articulo.Stock += detalleDto.Cantidad;
+                articulo.Stock += (int) detalleDto.Cantidad;
                 _context.Articulos.Update(articulo);
                 await _context.SaveChangesAsync();
             }
@@ -159,7 +159,6 @@ namespace rest_api_sistema_compra_venta.Controllers
         [Requerido]
         [NoNegativo]
         public decimal? Impuesto { get; set; }
-        [Requerido]
         [NoNegativo]
         public decimal? Total { get; set; }
         [Requerido]
@@ -169,10 +168,12 @@ namespace rest_api_sistema_compra_venta.Controllers
     public class DetalleDto : DtoBase
     {
         [Requerido]
-        public long IdArticulo { get; set; }
+        public long? IdArticulo { get; set; }
         [Requerido]
-        public int Cantidad { get; set; }
+        [NoNegativo]
+        public int? Cantidad { get; set; }
         [Requerido]
-        public decimal Precio { get; set; }
+        [NoNegativo]
+        public decimal? Precio { get; set; }
     }
 }
