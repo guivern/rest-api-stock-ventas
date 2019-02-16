@@ -25,7 +25,7 @@ namespace rest_api_sistema_compra_venta.Controllers
             {
                 var articulos = await _context.Articulos
                 .Include(a => a.Categoria)
-                .Where(a => a.Nombre.Contains(nombre))
+                .Where(a => a.Nombre.ToLower().Contains(nombre.ToLower()))
                 .Where(a => a.Activo)
                 .ToListAsync();
 
