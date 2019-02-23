@@ -61,16 +61,16 @@ namespace rest_api_sistema_compra_venta.Controllers
                 DetalleIngreso detalle = new DetalleIngreso
                 {
                     IdIngreso = ingreso.Id,
-                    IdArticulo = (long) detalleDto.IdArticulo,
-                    Cantidad = (int) detalleDto.Cantidad,
-                    Precio = (decimal) detalleDto.Precio,
+                    IdArticulo = (long)detalleDto.IdArticulo,
+                    Cantidad = (int)detalleDto.Cantidad,
+                    Precio = (decimal)detalleDto.Precio,
                     FechaCreacion = DateTime.Now
                 };
                 _context.DetallesIngresos.Add(detalle);
 
                 //se actualiza el stock
                 var articulo = await _context.Articulos.FindAsync(detalleDto.IdArticulo);
-                articulo.Stock += (int) detalleDto.Cantidad;
+                articulo.Stock += (int)detalleDto.Cantidad;
                 _context.Articulos.Update(articulo);
                 await _context.SaveChangesAsync();
             }
@@ -96,6 +96,29 @@ namespace rest_api_sistema_compra_venta.Controllers
             }).ToListAsync();
 
             return detalles;
+        }
+
+        [HttpGet("linq")]
+        public async Task<ActionResult<IEnumerable>> GetLinq()
+        {
+            // puedo mandar un object con los sgtes atributos: anio, mes y dia
+            DateTime date = new DateTime(2019,2,10);
+            var ingresos = await (from i in _context.Ingresos 
+                        join p in _context.Proveedores
+                        on i.IdProveedor equals p.Id
+                        join u in _context.Usuarios
+                        on i.IdUsuario equals u.Id
+                        where i.FechaHora > date
+                        select new{
+                            i.Id,
+                            idProveedor = p.Id,
+                            p.RazonSocial,
+                            i.FechaHora,
+                            usuario = u.Username 
+                        })
+                        .OrderByDescending(i => i.Id)
+                        .ToListAsync();
+            return Ok(ingresos); 
         }
 
         [HttpGet("[action]")]
@@ -164,7 +187,7 @@ namespace rest_api_sistema_compra_venta.Controllers
         [Requerido]
         public List<DetalleDto> Detalles { get; set; }
     }
-    
+
     public class DetalleDto : DtoBase
     {
         [Requerido]
