@@ -39,31 +39,60 @@ namespace rest_api_sistema_compra_venta.Controllers
             .ThenInclude(d => d.Articulo)
             .FirstOrDefaultAsync(v => v.Id == id);
 
-            if(venta == null) return NotFound();
+            if (venta == null) return NotFound();
 
             return Ok(venta);
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> Search([FromQuery] string filtro)
+        public async Task<IActionResult> Search([FromQuery] string filtro, [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
         {
-            if (filtro == null)
+            if (filtro == null && (fechaInicio == null || fechaFin == null))
             {
                 var query = _context.Ventas.AsQueryable();
                 return Ok(await IncludeListFields(query).ToListAsync());
             }
+            else if (filtro != null && (fechaInicio == null || fechaFin == null))
+            {
+                var ventas = await _context.Ventas
+                .Include(v => v.Cliente)
+                .Include(v => v.Usuario)
+                .Where(v => v.NroComprobante.Contains(filtro)
+                || v.Cliente.Nombre.ToLower().Contains(filtro.ToLower())
+                || v.Cliente.Apellido.ToLower().Contains(filtro.ToLower())
+                || v.Usuario.Username.ToLower().Contains(filtro.ToLower()))
+                .ToListAsync();
 
-            var ventas = await _context.Ventas
-            .Include(v => v.Cliente)
-            .Include(v => v.Usuario)
-            .Where(v => v.NroComprobante.Contains(filtro)
-            || v.Cliente.Nombre.ToLower().Contains(filtro.ToLower())
-            || v.Cliente.Apellido.ToLower().Contains(filtro.ToLower())
-            || v.Usuario.Username.ToLower().Contains(filtro.ToLower())
-            || v.FechaCreacion.ToString().Contains(filtro))
-            .ToListAsync();
+                return Ok(ventas);
+            }
+            else if (filtro != null && fechaInicio != null && fechaFin != null)
+            {
+                var ventas = await _context.Ventas
+                .Include(v => v.Cliente)
+                .Include(v => v.Usuario)
+                .Where(v => v.NroComprobante.Contains(filtro)
+                || v.Cliente.Nombre.ToLower().Contains(filtro.ToLower())
+                || v.Cliente.Apellido.ToLower().Contains(filtro.ToLower())
+                || v.Usuario.Username.ToLower().Contains(filtro.ToLower()))
+                .Where(v => v.FechaHora.Date >= fechaInicio.Value.Date && v.FechaHora.Date <= fechaFin.Value.Date)
+                .ToListAsync();
 
-            return Ok(ventas);
+                return Ok(ventas);
+            }
+            else
+            {
+                var ventas = await _context.Ventas
+                .Include(v => v.Cliente)
+                .Include(v => v.Usuario)
+                .Where(v => v.FechaHora.Date >=  fechaInicio.Value.Date && v.FechaHora.Date <= fechaFin.Value.Date)
+                .OrderByDescending(v => v.Id)
+                .Take(100)
+                .ToListAsync();
+
+                return Ok(ventas);
+            }
+
+
         }
 
         [HttpPost]
@@ -80,7 +109,7 @@ namespace rest_api_sistema_compra_venta.Controllers
             Venta venta = new Venta
             {
                 IdCliente = (long)dto.IdCliente,
-                IdUsuario = (long) dto.IdUsuario,
+                IdUsuario = (long)dto.IdUsuario,
                 TipoComprobante = dto.TipoComprobante,
                 NroComprobante = dto.NroComprobante,
                 FechaHora = DateTime.Now,
@@ -99,9 +128,9 @@ namespace rest_api_sistema_compra_venta.Controllers
                 DetalleVenta detalle = new DetalleVenta
                 {
                     IdVenta = venta.Id,
-                    IdArticulo = (long) detalleDto.IdArticulo,
-                    Cantidad = (int) detalleDto.Cantidad,
-                    Precio = (decimal) detalleDto.Precio,
+                    IdArticulo = (long)detalleDto.IdArticulo,
+                    Cantidad = (int)detalleDto.Cantidad,
+                    Precio = (decimal)detalleDto.Precio,
                     FechaCreacion = DateTime.Now,
                     Descuento = detalleDto.Descuento
                 };
@@ -109,7 +138,7 @@ namespace rest_api_sistema_compra_venta.Controllers
 
                 //se actualiza el stock
                 var articulo = await _context.Articulos.FindAsync(detalleDto.IdArticulo);
-                articulo.Stock -= (int) detalleDto.Cantidad;
+                articulo.Stock -= (int)detalleDto.Cantidad;
                 _context.Articulos.Update(articulo);
                 await _context.SaveChangesAsync();
             }
@@ -143,21 +172,9 @@ namespace rest_api_sistema_compra_venta.Controllers
             return NoContent();
         }
 
-        [HttpGet("consulta")]
-        public async Task<IActionResult> GetByFecha([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin)
-        {
-            var ventas = await _context.Ventas
-            .Include(v => v.Cliente)
-            .Include( v => v.Usuario)
-            .Where(v => v.FechaHora >= fechaInicio && v.FechaHora <= fechaFin)
-            .OrderByDescending(v => v.Id)
-            .Take(100)
-            .ToListAsync();
-        }
-
     }
 
-    public class VentaDto: DtoBase
+    public class VentaDto : DtoBase
     {
         [Requerido]
         public long? IdCliente { get; set; }
@@ -176,21 +193,21 @@ namespace rest_api_sistema_compra_venta.Controllers
         public List<DetalleVentaDto> Detalles { get; set; }
     }
 
-    public class DetalleVentaDto: DtoBase
+    public class DetalleVentaDto : DtoBase
     {
         [Requerido]
-        public long? IdArticulo {get; set;}
+        public long? IdArticulo { get; set; }
 
         [Requerido]
         [NoNegativo]
-        public int? Cantidad {get; set;}
+        public int? Cantidad { get; set; }
 
         [Requerido]
         [NoNegativo]
-        public decimal? Precio {get; set;}
+        public decimal? Precio { get; set; }
 
         [NoNegativo]
-        public decimal? Descuento {get; set;} = 0;
+        public decimal? Descuento { get; set; } = 0;
 
 
     }
