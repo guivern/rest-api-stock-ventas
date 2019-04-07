@@ -143,6 +143,18 @@ namespace rest_api_sistema_compra_venta.Controllers
             return NoContent();
         }
 
+        [HttpGet("consulta")]
+        public async Task<IActionResult> GetByFecha([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin)
+        {
+            var ventas = await _context.Ventas
+            .Include(v => v.Cliente)
+            .Include( v => v.Usuario)
+            .Where(v => v.FechaHora >= fechaInicio && v.FechaHora <= fechaFin)
+            .OrderByDescending(v => v.Id)
+            .Take(100)
+            .ToListAsync();
+        }
+
     }
 
     public class VentaDto: DtoBase
