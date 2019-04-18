@@ -84,7 +84,7 @@ namespace rest_api_sistema_compra_venta.Controllers
                 var ventas = await _context.Ventas
                 .Include(v => v.Cliente)
                 .Include(v => v.Usuario)
-                .Where(v => v.FechaHora.Date >=  fechaInicio.Value.Date && v.FechaHora.Date <= fechaFin.Value.Date)
+                .Where(v => v.FechaHora.Date >= fechaInicio.Value.Date && v.FechaHora.Date <= fechaFin.Value.Date)
                 .OrderByDescending(v => v.Id)
                 .Take(100)
                 .ToListAsync();
@@ -172,6 +172,25 @@ namespace rest_api_sistema_compra_venta.Controllers
             return NoContent();
         }
 
+        /* obtiene las ventas de los ultimos 12 meses,
+            agrupadas por mes */
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> GetDashboard()
+        {
+            var consulta = await _context.Ventas
+                .GroupBy(v => new {v.FechaHora.Month, v.FechaHora.Year})
+                .Select(x => new { mes = x.Key.Month, anio = x.Key.Year, valor = x.Sum(v => v.Total) })
+                .Take(12)
+                .OrderBy(x => x.anio).ThenBy(x => x.mes)
+                .ToListAsync();
+
+            return Ok(consulta.Select(v => new DashboardVentaDto
+            {
+                Mes = v.mes.ToString(),
+                Anio = v.anio.ToString(),
+                Valor = v.valor
+            }));
+        }
     }
 
     public class VentaDto : DtoBase
@@ -210,5 +229,12 @@ namespace rest_api_sistema_compra_venta.Controllers
         public decimal? Descuento { get; set; } = 0;
 
 
+    }
+
+    public class DashboardVentaDto
+    {
+        public string Mes { get; set; }
+        public string Anio { get; set; }
+        public decimal Valor { get; set; }
     }
 }
