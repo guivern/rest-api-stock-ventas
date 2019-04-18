@@ -1,11 +1,30 @@
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace rest_api_sistema_compra_venta.Models
 {
     public class DataContext: DbContext
     {
+        
         public DataContext(DbContextOptions<DataContext> options)
         :base(options){}
+
+        private byte[] GenerateHash(string pass)
+        {
+            if (!string.IsNullOrEmpty(pass))
+            {
+                using (SHA512 shaEncrypter = new SHA512Managed())
+                {
+                    var hashed = shaEncrypter.ComputeHash(
+                        Encoding.UTF8.GetBytes(pass));
+                    return hashed;
+                }
+            }
+
+            return null;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -14,6 +33,10 @@ namespace rest_api_sistema_compra_venta.Models
                 new Rol{Id = 1, Nombre="Administrador", Descripcion="Rol que posee todos los permisos del sistema", Activo = true},
                 new Rol{Id = 2, Nombre="Almacenero", Descripcion="Rol que posee los permisos del módulo almacén", Activo = true},
                 new Rol{Id = 3, Nombre="Vendedor", Descripcion="Rol que posee los permisos del módulo ventas", Activo = true}
+            );
+
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario{Id = 1, Username = "admin", HashPassword = GenerateHash("12345"), IdRol = 1, Nombre="admin", Apellido="admin"}
             );
 
             // Aqui se configuran los OnDelete cascade o restrict
