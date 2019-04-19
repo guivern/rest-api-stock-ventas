@@ -81,6 +81,7 @@ namespace rest_api_sistema_compra_venta
 
             // CORS
             services.AddCors();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,7 +105,14 @@ namespace rest_api_sistema_compra_venta
                 )
             .UseAuthentication()
             .UseHttpsRedirection()
-            .UseMvc();
+            .UseStaticFiles() // se agrega para produccion
+            .UseMvc(routes => {
+                routes.MapRoute(name: "default",
+                    template: "{controller=Home}/{action=Index}");
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller= "Home", action = "Index"});
+            });
         }
     }
 }
