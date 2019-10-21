@@ -101,10 +101,19 @@ namespace rest_api_sistema_compra_venta
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                )
-            .UseAuthentication()
-            .UseHttpsRedirection()
-            .UseMvc();
+                );
+            app.UseAuthentication();
+            app.UseHttpsRedirection();
+            app.UseDefaultFiles(); // para servir los archivos del frontend
+            app.UseStaticFiles(); // para servir los archivos del wwwroot (frontend)
+            // para que la API pueda resolver las rutas del frontend
+            app.UseMvc(routes =>
+            {
+                routes.MapSpaFallbackRoute(
+                  name: "spa-fallback",
+                  defaults: new { controller = "Home", action = "Index" }
+                );
+            });
         }
     }
 }
