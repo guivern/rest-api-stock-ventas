@@ -290,4 +290,8 @@ __pycache__/
 #README
 README.md
 
+# frontend static files
+# ejecutar npm run build desde la carpeta raiz del frontend
+wwwroot
+
 # End of https://www.gitignore.io/api/aspnetcore,visualstudiocode
