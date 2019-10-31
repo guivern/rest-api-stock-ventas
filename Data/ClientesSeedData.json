@@ -1,0 +1,62 @@
+[
+    {
+        "Nombre": "Oscar",
+        "Apellido": "Chavez",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "4383412-0"
+    },
+    {
+        "Nombre": "Maria",
+        "Apellido": "Jara",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "3383412-7"
+    },
+    {
+        "Nombre": "Rosa",
+        "Apellido": "Gaona",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "2284512-7"
+    },
+    {
+        "Nombre": "Carlos",
+        "Apellido": "Fernandez",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "1373442-4"
+    },
+    {
+        "Nombre": "Alberto",
+        "Apellido": "Gimenez",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "1273416-0"
+    },
+    {
+        "Nombre": "Roberto",
+        "Apellido": "Chavez",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "4482402-8"
+    },
+    {
+        "Nombre": "Marta",
+        "Apellido": "Ledesma",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "2008905-4"
+    },
+    {
+        "Nombre": "Ricardo",
+        "Apellido": "Sanchez",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "1002879-0"
+    },
+    {
+        "Nombre": "Calixto",
+        "Apellido": "Ortella",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "3353140-0"
+    },
+    {
+        "Nombre": "Lucia",
+        "Apellido": "Zarate",
+        "TipoDocumento": "RUC",
+        "NumeroDocumento": "1246418-8"
+    }
+]

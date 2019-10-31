@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using rest_api_sistema_compra_venta.Models;
+using rest_api_sistema_compra_venta.Data;
 
 namespace rest_api_sistema_compra_venta.Migrations
 {
@@ -16,7 +16,7 @@ namespace rest_api_sistema_compra_venta.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Articulo", b =>
@@ -259,7 +259,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 1L,
                             Activo = true,
                             Descripcion = "Rol que posee todos los permisos del sistema",
-                            FechaCreacion = new DateTime(2019, 2, 12, 19, 22, 1, 280, DateTimeKind.Local).AddTicks(4497),
+                            FechaCreacion = new DateTime(2019, 10, 31, 15, 41, 0, 8, DateTimeKind.Local).AddTicks(5211),
                             Nombre = "Administrador"
                         },
                         new
@@ -267,7 +267,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 2L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo almacén",
-                            FechaCreacion = new DateTime(2019, 2, 12, 19, 22, 1, 282, DateTimeKind.Local).AddTicks(1288),
+                            FechaCreacion = new DateTime(2019, 10, 31, 15, 41, 0, 8, DateTimeKind.Local).AddTicks(9786),
                             Nombre = "Almacenero"
                         },
                         new
@@ -275,7 +275,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 3L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo ventas",
-                            FechaCreacion = new DateTime(2019, 2, 12, 19, 22, 1, 282, DateTimeKind.Local).AddTicks(1350),
+                            FechaCreacion = new DateTime(2019, 10, 31, 15, 41, 0, 8, DateTimeKind.Local).AddTicks(9806),
                             Nombre = "Vendedor"
                         });
                 });

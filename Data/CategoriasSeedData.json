@@ -1,0 +1,30 @@
+[
+    {
+        "Nombre": "Bebidas",
+        "Descripcion": "Gaseoas, cervezas, vinos, etc."
+    },
+    {
+        "Nombre": "Alimentos perecederos",
+        "Descripcion": "Carne, pollo, queso, etc."
+    },
+    {
+        "Nombre": "Alimentos no perecederos",
+        "Descripcion": "Enlatados, fideos, arroz, yerba, etc."
+    },
+    {
+        "Nombre": "Frutas y Verduras",
+        "Descripcion": "Frutas y Verduras en gral."
+    },
+    {
+        "Nombre": "Limpieza del hogar",
+        "Descripcion": "Desodorantes de ambientes, enjuagues, trapeadores, etc."
+    },
+    {
+        "Nombre": "Higiene personal",
+        "Descripcion": "Desodorantes, jabon, shampoo, cepillo, etc."
+    },
+    {
+        "Nombre": "Bazar",
+        "Descripcion": "Otros tipos de articulos."
+    }
+]

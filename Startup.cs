@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using rest_api_sistema_compra_venta.Data;
 using rest_api_sistema_compra_venta.Mappings;
 using rest_api_sistema_compra_venta.Models;
 
@@ -31,12 +32,23 @@ namespace rest_api_sistema_compra_venta
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             // Database Configurations
             services.AddDbContext<DataContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            ConfigureServices(services);
+        }
 
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            // Database Configurations
+            services.AddDbContext<DataContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            ConfigureServices(services);
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -113,6 +125,17 @@ namespace rest_api_sistema_compra_venta
                   name: "spa-fallback",
                   defaults: new { controller = "Home", action = "Index" }
                 );
+            });
+
+            string basePath = Configuration.GetSection("ProductionBasePath:path").Value;
+
+            app.Map(basePath, appBuilder =>
+            {
+                appBuilder.UseSpa(spa =>
+                {
+                    spa.Options.DefaultPage = basePath + "/index.html";
+                    spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions { RequestPath = basePath };
+                });
             });
         }
     }
