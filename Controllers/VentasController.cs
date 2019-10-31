@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using rest_api_sistema_compra_venta.Annotations;
+using rest_api_sistema_compra_venta.Data;
 using rest_api_sistema_compra_venta.Models;
 
 namespace rest_api_sistema_compra_venta.Controllers

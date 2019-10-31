@@ -1,0 +1,65 @@
+[
+    {
+        "Codigo": "301101",
+        "Nombre": "Yerba Mate Campesino Menta y Boldo 500g.",
+        "PrecioVenta": 10000,
+        "Stock": 15,
+        "IdCategoria": 3
+    },
+    {
+        "Codigo": "301101",
+        "Nombre": "Yerba Mate Selecta Premium 500g.",
+        "PrecioVenta": 12000,
+        "Stock": 12,
+        "IdCategoria": 3
+    },
+    {
+        "Codigo": "101101",
+        "Nombre": "Coca Cola 2.25l.",
+        "PrecioVenta": 8000,
+        "Stock": 10,
+        "IdCategoria": 1
+    },
+    {
+        "Codigo": "101102",
+        "Nombre": "Coca Cola 3l.",
+        "PrecioVenta": 12000,
+        "Stock": 10,
+        "IdCategoria": 1
+    },
+    {
+        "Codigo": "302105",
+        "Nombre": "Arroz Supremo Tipo 1 1kg.",
+        "PrecioVenta": 6500,
+        "Stock": 12,
+        "IdCategoria": 3
+    },
+    {
+        "Codigo": "302106",
+        "Nombre": "Fideo Anita Spaghetti 400g.",
+        "PrecioVenta": 3500,
+        "Stock": 20,
+        "IdCategoria": 3
+    },
+    {
+        "Codigo": "201202",
+        "Nombre": "Galletita Toareg 120g. Costa",
+        "PrecioVenta": 5000,
+        "Stock": 15,
+        "IdCategoria": 2
+    },
+    {
+        "Codigo": "201203",
+        "Nombre": "Galletita Bono Chocolate 120g.",
+        "PrecioVenta": 4000,
+        "Stock": 8,
+        "IdCategoria": 2
+    },
+    {
+        "Codigo": "201204",
+        "Nombre": "Galletita Bono Dulce de leche 120g.",
+        "PrecioVenta": 4000,
+        "Stock": 10,
+        "IdCategoria": 2
+    }
+]

@@ -1,7 +1,7 @@
 # Environment settings 
 # Establecer el atributo "ConnectionStrings" en cada environment
-appsettings.Development.json
-appsettings.json
+# appsettings.Development.json
+# appsettings.json
 
 # Created by https://www.gitignore.io/api/aspnetcore,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=aspnetcore,visualstudiocode
@@ -289,5 +289,9 @@ __pycache__/
 
 #README
 README.md
+
+# frontend static files
+# ejecutar npm run build desde la carpeta raiz del frontend
+wwwroot
 
 # End of https://www.gitignore.io/api/aspnetcore,visualstudiocode

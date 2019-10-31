@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using rest_api_sistema_compra_venta.Models;
+using rest_api_sistema_compra_venta.Data;
 
 namespace rest_api_sistema_compra_venta.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190202180303_Proveedores_Migracion")]
-    partial class Proveedores_Migracion
+    [Migration("20191031184100_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Articulo", b =>
@@ -107,6 +107,103 @@ namespace rest_api_sistema_compra_venta.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.DetalleIngreso", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Cantidad");
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<DateTime>("FechaCreacion");
+
+                    b.Property<DateTime?>("FechaModificacion");
+
+                    b.Property<long>("IdArticulo");
+
+                    b.Property<long>("IdIngreso");
+
+                    b.Property<decimal>("Precio");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdArticulo");
+
+                    b.HasIndex("IdIngreso");
+
+                    b.ToTable("DetallesIngresos");
+                });
+
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.DetalleVenta", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Cantidad");
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<decimal?>("Descuento");
+
+                    b.Property<DateTime>("FechaCreacion");
+
+                    b.Property<DateTime?>("FechaModificacion");
+
+                    b.Property<long>("IdArticulo");
+
+                    b.Property<long>("IdVenta");
+
+                    b.Property<decimal>("Precio");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdArticulo");
+
+                    b.HasIndex("IdVenta");
+
+                    b.ToTable("DetallesVentas");
+                });
+
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Ingreso", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<string>("Estado")
+                        .IsRequired();
+
+                    b.Property<DateTime>("FechaCreacion");
+
+                    b.Property<DateTime>("FechaHora");
+
+                    b.Property<DateTime?>("FechaModificacion");
+
+                    b.Property<long>("IdProveedor");
+
+                    b.Property<long>("IdUsuario");
+
+                    b.Property<decimal>("Impuesto");
+
+                    b.Property<string>("NroComprobante")
+                        .IsRequired();
+
+                    b.Property<string>("TipoComprobante")
+                        .IsRequired();
+
+                    b.Property<decimal>("Total");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProveedor");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("Ingresos");
+                });
+
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Proveedor", b =>
                 {
                     b.Property<long>("Id")
@@ -164,7 +261,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 1L,
                             Activo = true,
                             Descripcion = "Rol que posee todos los permisos del sistema",
-                            FechaCreacion = new DateTime(2019, 2, 2, 15, 3, 3, 331, DateTimeKind.Local).AddTicks(5305),
+                            FechaCreacion = new DateTime(2019, 10, 31, 15, 41, 0, 8, DateTimeKind.Local).AddTicks(5211),
                             Nombre = "Administrador"
                         },
                         new
@@ -172,7 +269,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 2L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo almacén",
-                            FechaCreacion = new DateTime(2019, 2, 2, 15, 3, 3, 332, DateTimeKind.Local).AddTicks(3735),
+                            FechaCreacion = new DateTime(2019, 10, 31, 15, 41, 0, 8, DateTimeKind.Local).AddTicks(9786),
                             Nombre = "Almacenero"
                         },
                         new
@@ -180,7 +277,7 @@ namespace rest_api_sistema_compra_venta.Migrations
                             Id = 3L,
                             Activo = true,
                             Descripcion = "Rol que posee los permisos del módulo ventas",
-                            FechaCreacion = new DateTime(2019, 2, 2, 15, 3, 3, 332, DateTimeKind.Local).AddTicks(3757),
+                            FechaCreacion = new DateTime(2019, 10, 31, 15, 41, 0, 8, DateTimeKind.Local).AddTicks(9806),
                             Nombre = "Vendedor"
                         });
                 });
@@ -232,6 +329,45 @@ namespace rest_api_sistema_compra_venta.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Venta", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<string>("Estado")
+                        .IsRequired();
+
+                    b.Property<DateTime>("FechaCreacion");
+
+                    b.Property<DateTime>("FechaHora");
+
+                    b.Property<DateTime?>("FechaModificacion");
+
+                    b.Property<long>("IdCliente");
+
+                    b.Property<long>("IdUsuario");
+
+                    b.Property<decimal>("Impuesto");
+
+                    b.Property<string>("NroComprobante")
+                        .IsRequired();
+
+                    b.Property<string>("TipoComprobante")
+                        .IsRequired();
+
+                    b.Property<decimal>("Total");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCliente");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("Ventas");
+                });
+
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Articulo", b =>
                 {
                     b.HasOne("rest_api_sistema_compra_venta.Models.Categoria", "Categoria")
@@ -240,11 +376,63 @@ namespace rest_api_sistema_compra_venta.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.DetalleIngreso", b =>
+                {
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Articulo", "Articulo")
+                        .WithMany()
+                        .HasForeignKey("IdArticulo")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Ingreso", "Ingreso")
+                        .WithMany("Detalles")
+                        .HasForeignKey("IdIngreso")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.DetalleVenta", b =>
+                {
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Articulo", "Articulo")
+                        .WithMany()
+                        .HasForeignKey("IdArticulo")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Venta", "Venta")
+                        .WithMany("Detalles")
+                        .HasForeignKey("IdVenta")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Ingreso", b =>
+                {
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Proveedor", "Proveedor")
+                        .WithMany()
+                        .HasForeignKey("IdProveedor")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Usuario", b =>
                 {
                     b.HasOne("rest_api_sistema_compra_venta.Models.Rol", "Rol")
                         .WithMany()
                         .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("rest_api_sistema_compra_venta.Models.Venta", b =>
+                {
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("rest_api_sistema_compra_venta.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

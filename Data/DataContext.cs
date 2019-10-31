@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using rest_api_sistema_compra_venta.Models;
 
-namespace rest_api_sistema_compra_venta.Models
+namespace rest_api_sistema_compra_venta.Data
 {
     public class DataContext: DbContext
     {
